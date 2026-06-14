@@ -141,10 +141,10 @@ python -m pytest tests
 If you use this code or benchmark protocol, please cite:
 
 ```bibtex
-@article{phan_split_aware_iot,
-  title   = {Split-Aware Learning for IoT Intrusion Detection under Temporal Domain Shift},
-  author  = {Phan, Anh-Minh and Le, Khanh Toan Dang and Vu, Thai-Huy and Vo, Que-Son},
-  note    = {Ho Chi Minh City University of Technology (HCMUT)}
+@article{phan6598378split,
+  title={Split-Aware Learning for IoT Intrusion Detection under Temporal Domain Shift},
+  author={Phan, Anh-Minh and Le, Khanh Toan Dang and Vu, Thai-Huy and Vo, Son Que},
+  journal={Available at SSRN 6598378}
 }
 ```
 
