@@ -1,0 +1,10 @@
+# Supported algorithms: logistic, svm, random_forest, knn (and variants).
+# Change paths below to point to your dataset splits. Last column is label by default.
+task_type: binary  # or multiclass
+normalize: true  # set false to skip StandardScaler
+use_pca: false  # set true or run with --mode pca to enable PCA
+pca_variance: 0.95  # variance retained when PCA is enabled
+train_data_path: /home/user/son/IPv6_detect_attack_by_AI/dataset1/multiclass/80/train.csv
+val_data_path: /home/user/son/IPv6_detect_attack_by_AI/dataset1/multiclass/80/val.csv
+test_data_path: /home/user/son/IPv6_detect_attack_by_AI/dataset1/multiclass/80/test.csv
+batch_size: 8192  # used by some scripts; fine to leave as-is

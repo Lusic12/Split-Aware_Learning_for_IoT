@@ -1,0 +1,8 @@
+task_type: multiclass
+normalize: true
+use_pca: false
+pca_variance: 0.95
+train_data_path: Benchmark_data\dataset4\multiclass\100\train.csv
+val_data_path: Benchmark_data\dataset4\multiclass\100\val.csv
+test_data_path: Benchmark_data\dataset4\multiclass\100\test.csv
+batch_size: 8192

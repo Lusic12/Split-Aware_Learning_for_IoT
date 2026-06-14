@@ -1,0 +1,22 @@
+data:
+  train_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/multiclass/50/train.csv
+  val_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/multiclass/50/val.csv
+  test_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/multiclass/50/test.csv
+
+  label_col: label
+  time_col: time
+
+model:
+  hidden_dims: [256, 128]
+
+train:
+  batch_size: 512
+  communication_rounds: 30
+  local_epochs: 2
+  n_clients: 5
+  online_ratio: 1.0
+  lr: 0.001
+  weight_decay: 0.0001
+  target_entropy_weight: 0.05
+  seed: 42
+  output_dir: ./outputs/rethinkfl_split_shift_dataset3_multiclass_50

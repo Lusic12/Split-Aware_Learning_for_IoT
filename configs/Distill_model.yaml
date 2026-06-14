@@ -1,0 +1,80 @@
+task_type: binary  # or multiclass
+
+data_config:
+  use_sequence: true
+  sequence_length: 20
+  stride: 10
+  # Last column in CSV is the label.
+  # Use project-relative paths so config is portable across machines.
+  train_data_path: data/binary_train.csv
+  val_data_path: data/binary_val.csv
+  test_data_path: data/binary_test.csv
+  normalize: true
+  batch_size: 512
+  num_workers: 6
+  pin_memory: true
+  persistent_workers: true
+  use_pca: false  # must match teacher checkpoint
+  pca_variance: 0.98
+
+teacher:
+  model_type: rnn
+  num_class: 2
+  # For rnn/lstm/gru: [recurrent_hidden, fc_hidden]
+  # For cnn: four FC sizes, e.g. [512, 256, 128, 64]
+  hidden_layer_list: [512, 256]
+  time_embedding:
+    enabled: false
+    type: time2vec
+    dim: 8
+    activation: sin
+    normalize: true
+  checkpoint: weights/best_rnn_binary_model.pth  # must match this teacher config
+
+student:
+  model_type: gru
+  num_class: 2
+  # Smaller student
+  hidden_layer_list: [128, 64]
+  lr: 0.001
+  num_epochs: 10
+  weight_decay: 0.0
+  time_embedding:
+    enabled: true
+    type: time2vec
+    dim: 8
+    activation: sin
+    normalize: true
+
+distillation:
+  temperature: 4.0
+  alpha: 0.5
+  use_focal_loss: true
+  focal_gamma: 2.0
+  save_dir: checkpoints   # keep under --out-dir without double prefix
+
+class_names: [Normal, Attack]
+
+# tcn_transformer-only settings (if teacher/student use tcn_transformer)
+tcn_config:
+  input_channels: null
+  output_channels: 64
+  num_layers: 3
+  kernel_size: 15
+  dilation_base: 2  # -> dilations 1,2,4 for num_layers=3
+  hidden_layers: [256, 128, 64]
+  stride: 1
+
+transformer_config:
+  model_dim: 64
+  dim_feedforward: 256
+  num_heads: 2
+  num_layers: 2
+  dropout: 0.2
+
+fusion_config:
+  dropout: 0.2
+  use_batch_norm: true
+
+# Required by tcn_transformer head (dense layers)
+hidden_size: [256, 128, 64]

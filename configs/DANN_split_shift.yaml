@@ -1,0 +1,24 @@
+data:
+  # split_shift mode: train/val/test are treated as different domains.
+  # DANN uses train as source domain and val as target domain during training.
+  # test is only for final evaluation on unseen domain shift.
+  train_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/binary/50/train.csv
+  val_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/binary/50/val.csv
+  test_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/binary/50/test.csv
+
+  label_col: label
+  time_col: time
+
+model:
+  feature_space: union
+  hidden_dims: [256, 128]
+  feature_dim: 128
+
+train:
+  batch_size: 512
+  n_epochs: 30
+  lr: 0.001
+  weight_decay: 0.0001
+  lambda_domain: 0.5
+  seed: 42
+  output_dir: ./outputs/dann_split_shift_dataset3_binary_50

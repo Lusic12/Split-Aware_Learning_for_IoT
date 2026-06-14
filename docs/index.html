@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Split-Aware Learning for IoT Intrusion Detection under Temporal Domain Shift</title>
+<meta name="description" content="ATA: Adaptive Temporal Alignment for forward-in-time RPL-IoT intrusion detection under temporal domain shift. A split-aware evaluation benchmark." />
+<style>
+  :root{
+    --ink:#1b2733; --muted:#5b6b7b; --accent:#1f4e79; --accent2:#2a7ab0;
+    --bg:#f6f8fb; --card:#ffffff; --line:#e3e9f0; --gold:#fdf3c2; --goldfg:#7a5c00;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.6}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  header{background:linear-gradient(180deg,#fff, var(--bg));border-bottom:1px solid var(--line);padding:48px 0 28px}
+  h1{font-size:30px;line-height:1.25;margin:0 0 14px;color:var(--ink)}
+  .authors{font-size:18px;margin:6px 0 2px}
+  .authors a{color:var(--ink);border-bottom:1px dotted #aab7c4}
+  .aff{color:var(--muted);font-size:15px;margin:2px 0 18px}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;
+       padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600}
+  .btn.alt{background:#33414f}
+  .btn.ghost{background:#fff;color:var(--accent);border:1px solid var(--line)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:21px;color:var(--accent);margin:0 0 14px}
+  h3{font-size:16px;margin:18px 0 6px}
+  p{margin:0 0 12px}
+  .lead{font-size:16px}
+  ul.tight{margin:0 0 10px;padding-left:20px}
+  ul.tight li{margin:5px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+  .stat b{display:block;font-size:24px;color:var(--accent)}
+  .stat span{font-size:13px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:center}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:#eef4fa;color:var(--accent);font-weight:700}
+  .best{background:var(--gold);color:var(--goldfg);font-weight:700;border-radius:5px}
+  .note{color:var(--muted);font-size:13px}
+  figure{margin:20px 0;text-align:center}
+  figure img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px}
+  figcaption{color:var(--muted);font-size:13px;margin-top:8px;text-align:left;line-height:1.5}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:0}
+  .steps li{position:relative;padding:10px 0 10px 46px;border-bottom:1px dashed var(--line)}
+  .steps li:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:10px;
+      width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;
+      display:flex;align-items:center;justify-content:center;font-weight:700}
+  pre{background:#0f1b29;color:#dce6f0;padding:14px 16px;border-radius:10px;overflow:auto;font-size:13px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  footer{padding:26px 0 50px;color:var(--muted);font-size:13px;text-align:center}
+  @media(max-width:640px){.grid3{grid-template-columns:1fr}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Split-Aware Learning for IoT Intrusion Detection<br/>under Temporal Domain Shift</h1>
+    <div class="authors">
+      Anh-Minh Phan, Khanh Toan Dang Le, Thai-Huy Vu, Que-Son Vo
+    </div>
+    <div class="aff">Ho Chi Minh City University of Technology (HCMUT), VNU-HCM &middot; Vietnam</div>
+    <div class="btns">
+      <a class="btn ghost" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6598378" target="_blank" rel="noopener">📄 Paper (SSRN)</a>
+      <a class="btn alt" href="https://github.com/Lusic12/IPv6_detect_attack_by_AI">💻 Code (GitHub)</a>
+      <a class="btn" href="#results">📊 Results</a>
+    </div>
+    <p class="note" style="margin-top:14px">A split-aware benchmark and a lightweight temporal-adaptation method (ATA)
+      for <em>forward-in-time</em> RPL-IoT intrusion detection.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="abstract">
+  <h2>Abstract</h2>
+  <p class="lead">Random train–test splits remain the default in RPL-IoT intrusion detection, but for time-ordered
+  traffic they let temporally adjacent samples fall on both sides of the partition, so a high score can reflect
+  matched-distribution pattern recovery rather than forward-in-time robustness. We make this split effect
+  measurable: feature-level train–test drift is near zero under random-full splits (mean SMD ≈ 0.001–0.006) but
+  rises one to two orders of magnitude under chronological retained-prefix splits (up to ≈ 1.0). To address that
+  shift we propose <strong>Adaptive Temporal Alignment (ATA)</strong>, which partitions the chronological training
+  stream into temporal domains and aligns their latent representations while preserving class discrimination,
+  <em>without using future labels</em>. Under chronological evaluation, ATA improves macro-F1 on ROUT-04 over DANN and CDAN at
+  <em>every</em> retained ratio, from <strong>+3.6</strong> (binary, α=50%) up to <strong>+8.5</strong>
+  (multiclass, α=60%) — significant in all but the full-history multiclass cell — while remaining lightweight
+  (~50K parameters); on the harder RPL-Beh it is competitive. The protocol, not the backbone, materially changes
+  which detector appears best.</p>
+</section>
+
+<section id="highlights">
+  <h2>Highlights</h2>
+  <ul class="tight">
+    <li>We reveal a systematic evaluation bias in random-split IoT intrusion detection.</li>
+    <li>Temporal (chronological) splits expose severe domain shift in RPL-based networks.</li>
+    <li>We propose <strong>ATA</strong> for robust detection under temporal shift — target-free, no future labels.</li>
+    <li>ATA improves macro-F1 over strong baselines where temporal mismatch is largest.</li>
+    <li>We introduce a split-aware, deployment-oriented benchmark with an α-sweep diagnostic.</li>
+  </ul>
+</section>
+
+<section id="problem">
+  <h2>Why the split matters</h2>
+  <p>In time-ordered RPL traffic, shuffling lets a test window be scored against training samples drawn from an
+  almost adjacent point in time — <em>temporal leakage</em>. Under a random split the train/test distributions are
+  matched (mean SMD ≈ 0), so high scores certify pattern recoverability, not robustness to future traffic. A
+  chronological split restores the structural drift a deployed IDS actually faces.</p>
+  <div class="grid3">
+    <div class="stat"><b>~0.001</b><span>mean feature drift (SMD) under random-full split</span></div>
+    <div class="stat"><b>up to ~1.0</b><span>feature drift under chronological split</span></div>
+    <div class="stat"><b>α ∈ {.5,.6,.8,1}</b><span>retained-history sweep diagnostic</span></div>
+  </div>
+  <figure>
+    <img src="figures/drift_rout.png" alt="ROUT-04 temporal vs random feature drift" />
+    <figcaption><strong>Feature drift, random vs chronological (ROUT-04).</strong> Under shuffling the
+      train–test mismatch nearly vanishes; under chronological splits the dominant features (e.g. <code>dio</code>)
+      separate sharply. The gap a detector must overcome is created by the protocol, not the backbone.</figcaption>
+  </figure>
+</section>
+
+<section id="method">
+  <h2>Method — Adaptive Temporal Alignment (ATA)</h2>
+  <p>ATA is a lightweight regularizer on top of a standard classifier, not a larger backbone. It turns one
+  training set into a multi-source problem from the time axis, then enforces phase-invariant representations.</p>
+  <figure>
+    <img src="figures/ata.png" alt="ATA architecture" />
+    <figcaption><strong>Adaptive Temporal Alignment.</strong> The time-ordered stream is cut into contiguous
+      temporal domains; a shared encoder plus a cross-domain alignment loss keeps the representation discriminative
+      yet stable across phases, while per-phase classification preserves class structure.</figcaption>
+  </figure>
+  <ol class="steps">
+    <li><strong>Temporal domain construction.</strong> Sort the training stream by time and cut it into
+      <em>K=3</em> contiguous phases (quantile / TDC) — no external domain label required.</li>
+    <li><strong>Cross-domain alignment.</strong> A shared encoder + pairwise transfer loss (MMD/CORAL/cosine)
+      pulls per-phase feature distributions toward a common geometry.</li>
+    <li><strong>Temporally robust head.</strong> Per-phase classification keeps class structure, so alignment
+      cannot collapse it; the model keeps only features that are <em>discriminative and phase-invariant</em>.</li>
+  </ol>
+  <p class="note">Unlike DANN/CDAN/CORAL (transductive source→target, need target samples at train time), ATA is
+  <strong>target-free</strong>: it aligns observed historical phases to transfer to the unseen future.</p>
+</section>
+
+<section id="results">
+  <h2>Results (chronological, mean macro-F1 over α)</h2>
+  <p class="note">Two representative RPL-IoT datasets with different temporal-difficulty profiles. Best per row in gold.
+  We report honestly: ATA dominates ROUT-04, and is competitive — not uniformly best — on the harder RPL-Beh.</p>
+  <table>
+    <thead><tr><th>Dataset / Task</th><th>ATA (ours)</th><th>CDAN</th><th>DANN</th><th>Params</th></tr></thead>
+    <tbody>
+      <tr><td>ROUT-04 · Binary</td><td class="best">86.8</td><td>81.9</td><td>82.1</td><td>~50K</td></tr>
+      <tr><td>ROUT-04 · Multiclass</td><td class="best">80.8</td><td>75.9</td><td>73.9</td><td>~50K</td></tr>
+      <tr><td>RPL-Beh · Binary</td><td>67.6</td><td class="best">68.5</td><td>68.2</td><td>~50K</td></tr>
+      <tr><td>RPL-Beh · Multiclass</td><td class="best">51.5</td><td>49.7</td><td>48.8</td><td>~50K</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <img src="figures/delta_f1.png" alt="ATA macro-F1 gap over DANN and CDAN per retained ratio" />
+    <figcaption><strong>ATA vs. DANN/CDAN per retained ratio.</strong> Positive bars = ATA higher; stars denote
+      Welch significance. ATA gains are large and significant on ROUT-04; on RPL-Beh binary it trails at small
+      α and only pulls ahead as the retained history grows — reported honestly, not as a single headline number.</figcaption>
+  </figure>
+  <p class="note">ATA uses ~1.8× fewer parameters than DANN and &gt;60× fewer than an LSTM backbone, while leading
+  where temporal mismatch is largest. Per-configuration confidence intervals and Welch significance tests are
+  reported in the paper.</p>
+  <figure>
+    <img src="figures/drift_alpha.png" alt="Why chronological performance is non-monotonic in alpha" />
+    <figcaption><strong>Why more history is not always better.</strong> On ROUT-04 the feature drift dips at
+      α=60% (where macro-F1 peaks) and jumps at α=100% (where it collapses); RPL-Beh stays in a persistently
+      high-drift band. The performance trend tracks a measured property of the data, not optimization noise.</figcaption>
+  </figure>
+</section>
+
+<section id="cite">
+  <h2>Citation</h2>
+  <pre><code>@article{phan_split_aware_ata,
+  title   = {Split-Aware Learning for IoT Intrusion Detection under Temporal Domain Shift},
+  author  = {Phan, Anh-Minh and Dang Le, Khanh Toan and Vu, Thai-Huy and Vo, Que-Son},
+  year    = {2025},
+  note    = {Preprint},
+  institution = {Ho Chi Minh City University of Technology (HCMUT), VNU-HCM}
+}</code></pre>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    © 2025 HCMUT · Code: <a href="https://github.com/Lusic12/IPv6_detect_attack_by_AI">Lusic12/IPv6_detect_attack_by_AI</a>
+    · Project page built from the manuscript.
+  </div>
+</footer>
+</body>
+</html>

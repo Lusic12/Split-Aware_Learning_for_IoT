@@ -1,0 +1,62 @@
+task_type: multiclass
+data_config:
+  use_sequence: true
+  use_true_timeseries: true
+  sequence_length: 20
+  stride: 10
+  label_mode: last_label
+  train_data_path: 2_benchmark_data\dataset4\multiclass\50\train.csv
+  val_data_path: 2_benchmark_data\dataset4\multiclass\50\val.csv
+  test_data_path: 2_benchmark_data\dataset4\multiclass\50\test.csv
+  batch_size: 2048
+  use_pca: false
+  pca_variance: 0.98
+train_config:
+  model_type: rnn
+  lr: 0.0005
+  num_epochs: 20
+  weight_decay: 0.0001
+  num_class: 5
+  hidden_layer_list:
+  - 512
+  - 256
+  time_embedding:
+    enabled: false
+    type: time2vec
+    dim: 16
+    activation: sin
+    normalize: true
+class_names:
+- Normal
+- Dogdag
+- Flooding
+- Blackhole
+- Rank
+tcn_config:
+  input_channels: null
+  output_channels: 32
+  num_layers: 3
+  kernel_size: 7
+  dilation_base: 2
+  hidden_layers:
+  - 256
+  - 128
+  stride: 1
+transformer_config:
+  model_dim: 32
+  dim_feedforward: 128
+  num_heads: 2
+  num_layers: 2
+  dropout: 0.3
+fusion_config:
+  dropout: 0.3
+  use_batch_norm: true
+hidden_size:
+- 128
+- 64
+- 32
+logging:
+  save_model: true
+  save_plots: true
+  log_interval: 100
+  model_save_path: weights/best_{model_name}_model.pth

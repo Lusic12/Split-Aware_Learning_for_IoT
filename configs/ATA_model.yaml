@@ -1,0 +1,64 @@
+# ATA config for temporal domain-adaptive IoT attack detection
+# This config supports two loading modes:
+# - time_series: keep temporal order and split by time
+# - random_shuffle: randomize samples before splitting domains
+
+task_type: multiclass
+
+# Column convention:
+# - time column is first (example: time_sec)
+# - label column is last (example: label)
+# You can still change names below; ATA uses names, not fixed positions.
+data_config:
+  # Option A: explicit files
+  # Use project-relative paths so config is portable across machines.
+  train_data_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/multiclass/50/train.csv
+  val_data_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/multiclass/50/val.csv
+  test_data_path: /home/user/son/IPv6_detect_attack_by_AI/2_benchmark_data/dataset3/multiclass/50/test.csv
+
+
+  # Column mapping
+  time_col: time_sec
+  label_col: label
+
+  # Leave null to auto infer feature columns = all columns except time_col and label_col
+  feature_cols: null
+
+  # Loading strategy
+  load_mode: time_series     # time_series | random_shuffle
+  split_method: quantile     # quantile | tdc | manual (used in time_series mode)
+  num_domains: 3
+
+  # Data processing
+  normalize: true
+  train_shuffle: true
+  batch_size: 512
+
+model_config:
+  model_type: adarnn         # adarnn | adarnn_mlp
+  hidden_size: 64
+  num_layers: 2
+  dropout: 0.2
+  use_bottleneck: true
+  bottleneck_dim: 64
+  seq_len: 1
+  loss_type: mmd             # mmd | mmd_rbf | coral | adv | cosine
+
+train_config:
+  output_dir: /home/user/son/IPv6_detect_attack_by_AI/outputs/checkpoints/ata/dataset3/multiclass/50/seed_1/ata_mmd_domains3_dw0.5_adam
+  n_epochs: 20
+  lr: 0.001
+  weight_decay: 1.0e-4
+  early_stop: 20
+  dw: 0.5
+  len_win: 0
+  seed: 1
+
+  # Imbalance handling
+  use_class_weights: false
+  attack_weight: 3.0
+
+notes:
+  - If you want random split experiment, set data_config.load_mode=random_shuffle.
+  - If your CSV has first column time and last column label, keep time_col/label_col as above.
+  - For custom features, set data_config.feature_cols as a YAML list or use --feature_cols in CLI.

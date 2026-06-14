@@ -1,0 +1,111 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Model weights and outputs
+*.pth
+models/*.pkl
+models/*.joblib
+latex
+
+
+
+# Ignore all data files (except code and docs)
+data/*
+!data/*.py
+!data/*.md
+!data/README*
+!data/__init__.py
+
+
+
+# Ignore all CSV data files
+data/*.csv
+
+data/__pycache__/
+
+# Ignore batch run reports
+batch_run_report_*.txt
+ablation_results*.txt
+ablation_results*.json
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local-only code directories
+other_model/
+utils/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore images
+img/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Current output
+Benchmark_data
+benchmark_results
+figures
+img
+logs
+Raw_data
+synthenic_data
+weights
+outputs/
+2_benchmark_data/
+data_raw/
+dataset*.zip
+*.log
+
+# Keep project-page assets (override the bare 'figures' ignore above)
+!docs/figures/
+!docs/figures/*
